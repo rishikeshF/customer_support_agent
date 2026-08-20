@@ -1,13 +1,4 @@
-Your design architecture goes in this folder
+# Design
 
-
-user input
-
-supervisor 
-
-classifier : priority: normal/urgent 
-
-resolver: 
-round robin algorithm 
-
-escalate
+[architecture.md](architecture.md) — the diagram, the routing rules, how
+round-robin works, and how the two memory levels differ.
