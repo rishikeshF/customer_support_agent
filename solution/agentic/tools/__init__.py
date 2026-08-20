@@ -16,14 +16,22 @@ from agentic.tools.customer import (
     get_user_reservations,
     get_user_subscription,
 )
-from agentic.tools.knowledge import search_rag_knowledge_base
+from agentic.tools.knowledge import assess_knowledge_confidence, search_rag_knowledge_base
 from agentic.tools.memory import (
     init_long_term_memory,
+    load_history_text,
     load_preferences_text,
     recall_customer_preferences,
+    recall_past_issues,
     remember_customer_preference,
+    remember_resolved_issue,
 )
-from agentic.tools.tickets import escalate_ticket, get_ticket_details, get_ticket_messages
+from agentic.tools.tickets import (
+    append_ticket_message,
+    escalate_ticket,
+    get_ticket_details,
+    get_ticket_messages,
+)
 
 agentic_tools = [
     search_rag_knowledge_base,
@@ -34,20 +42,26 @@ agentic_tools = [
     get_ticket_messages,
     remember_customer_preference,
     recall_customer_preferences,
+    recall_past_issues,
 ]
 
 __all__ = [
     "agentic_tools",
     "search_rag_knowledge_base",
+    "assess_knowledge_confidence",
     "get_account_user_by_external_id",
     "get_user_subscription",
     "get_user_reservations",
     "get_ticket_details",
     "get_ticket_messages",
+    "append_ticket_message",
     "escalate_ticket",
     "remember_customer_preference",
     "recall_customer_preferences",
     "load_preferences_text",
+    "remember_resolved_issue",
+    "recall_past_issues",
+    "load_history_text",
     "init_long_term_memory",
     "urgency_detector",
     "domain_detector",

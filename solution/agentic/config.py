@@ -11,6 +11,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from langchain_community.vectorstores import FAISS
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langgraph.checkpoint.sqlite import SqliteSaver
 
 load_dotenv()
 
@@ -21,6 +22,12 @@ BASE_DIR = Path(__file__).resolve().parents[1] if "__file__" in globals() else P
 CORE_DB = BASE_DIR / "data" / "core" / "udahub.db"
 EXTERNAL_DB = BASE_DIR / "data" / "external" / "cultpass.db"
 VECTOR_DIR = BASE_DIR / "data" / "vectorstore"
+LOG_DIR = BASE_DIR / "data" / "logs"
+CHECKPOINT_DB = BASE_DIR / "data" / "core" / "checkpoints.db"
+
+# How sure we need to be that the knowledge base covers a question before we
+# let an agent answer it. Below this, the ticket goes to a human instead.
+KNOWLEDGE_CONFIDENCE_THRESHOLD = 0.5
 
 API_KEY = os.getenv("VOCAREUM_API_KEY") or os.getenv("OPENAI_API_KEY")
 BASE_URL = os.getenv("OPENAI_BASE_URL", "https://openai.vocareum.com/v1")
@@ -50,3 +57,18 @@ def connect(db_path: Path) -> sqlite3.Connection:
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     return conn
+
+
+def build_checkpointer() -> SqliteSaver:
+    """
+    Short-term memory, backed by a file so it survives a restart.
+
+    `SqliteSaver.from_conn_string` is a context manager and closes the
+    connection on exit, so we own the connection ourselves instead. The graph
+    is only ever used from the notebook or a script, hence check_same_thread.
+    """
+    CHECKPOINT_DB.parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(CHECKPOINT_DB, check_same_thread=False)
+    saver = SqliteSaver(conn)
+    saver.setup()
+    return saver

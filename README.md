@@ -5,13 +5,26 @@ ticket, decides how to handle it, and either resolves it or hands it to a human.
 
 ```
 user -> resolve_context -> load_memory -> classify_urgency
-                                            |-- escalation -> escalation agent
-                                            |-- urgent     -> round-robin team
-                                            |-- normal     -> single expert
+                                            |-- escalation ------------.
+                                            '-- check_knowledge --.    |
+                                                   |              |    |
+                                        confident  |              '----+-> escalation
+                                                   v                   |
+                                      urgent -> round-robin team       |
+                                      normal -> single expert          |
+                                                   |                   |
+                                                   '-------> finalize <'
 ```
+
+A ticket reaches a human for either of two reasons: the customer asked, or the
+knowledge base cannot support an answer. The second check is what stops an
+agent inventing one.
 
 Escalation beats urgency: "this is broken, get me a manager" goes to a human,
 because no automated answer will satisfy it.
+
+Every decision is logged as JSON to `solution/data/logs/uda-hub.jsonl`. Replay
+a ticket with `read_log(ticket_id=...)`.
 
 Design notes: [solution/agentic/design/architecture.md](solution/agentic/design/architecture.md)
 
@@ -72,8 +85,9 @@ solution/
 │   ├── design/      architecture notes
 │   ├── tools/       what the agents can call
 │   ├── config.py    paths, model clients, vector store
+│   ├── observability.py  structured logging
 │   └── workflow.py  the orchestrator graph
-├── data/            databases and the vector index
+├── data/            databases, vector index, logs
 ├── tests/           the test suite
 ├── index.py         runnable entry point
 ├── index.ipynb      the package flattened into a notebook (generated)

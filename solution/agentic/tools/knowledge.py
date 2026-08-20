@@ -1,10 +1,13 @@
-"""RAG tool: semantic search over the support knowledge base."""
+"""RAG tools: semantic search over the support knowledge base, and a check on
+whether that knowledge base can actually answer a given question."""
 
-from typing import Optional
+from typing import Literal, Optional
 
+from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.tools import tool
+from pydantic import BaseModel, Field
 
-from agentic.config import vectorstore
+from agentic.config import llm, vectorstore
 
 
 @tool
@@ -47,3 +50,73 @@ def search_rag_knowledge_base(
         }
         for doc in results[:top_n]
     ]
+
+
+class KnowledgeConfidence(BaseModel):
+    """How well the knowledge base covers a question."""
+
+    confidence: float = Field(
+        default=0.0,
+        ge=0.0,
+        le=1.0,
+        description="0 means the articles are irrelevant, 1 means they answer the question outright.",
+    )
+    answerable_by: Literal["knowledge_base", "customer_data", "neither"] = Field(
+        default="neither",
+        description="Where the answer would come from, if anywhere.",
+    )
+    reason: str = Field(default="", description="One short sentence explaining the score.")
+
+
+def assess_knowledge_confidence(query: str) -> dict:
+    """
+    Score whether we can answer a question at all before an agent tries.
+
+    A low score is the signal to escalate: if neither the knowledge base nor the
+    customer's own records cover the question, no amount of agent effort will
+    produce a grounded answer, so it belongs with a human.
+
+    Account-specific questions ("what are my reservations") score through
+    `answerable_by="customer_data"` even when no article matches, because the
+    agents' database tools can answer those without a knowledge base article.
+    """
+    articles = search_rag_knowledge_base.invoke({"query": query, "top_n": 3})
+
+    if not articles:
+        return {
+            "confidence": 0.0,
+            "answerable_by": "neither",
+            "reason": "The knowledge base returned no articles.",
+            "articles": [],
+        }
+
+    rendered = "\n\n".join(
+        f"[{a['article_id']}] {a['title']} ({a['category']})\n{a['snippet']}" for a in articles
+    )
+
+    messages = [
+        SystemMessage(
+            content=(
+                "You decide whether a customer support question can be answered from the "
+                "material available, before an agent attempts it.\n"
+                "Score 'confidence' from 0 to 1 for how well the retrieved articles cover "
+                "the question.\n"
+                "Set 'answerable_by':\n"
+                "- 'knowledge_base' if the articles genuinely answer it;\n"
+                "- 'customer_data' if it is about this customer's own account, bookings, "
+                "subscription or charges, which support tools can look up directly. Use a "
+                "confidence of at least 0.7 in this case even if no article matches;\n"
+                "- 'neither' if the question is outside both. Score this below 0.5.\n"
+                "Be strict: a vaguely related article is not coverage."
+            )
+        ),
+        HumanMessage(content=f"Question:\n{query}\n\nRetrieved articles:\n{rendered}"),
+    ]
+
+    result = llm.with_structured_output(KnowledgeConfidence).invoke(messages)
+    return {
+        "confidence": result.confidence,
+        "answerable_by": result.answerable_by,
+        "reason": result.reason,
+        "articles": articles,
+    }

@@ -1,4 +1,7 @@
-"""Tools that read ticket data and hand a ticket to a human."""
+"""Tools that read and write ticket data, and hand a ticket to a human."""
+
+import uuid
+from datetime import datetime, timezone
 
 from langchain_core.tools import tool
 
@@ -44,6 +47,47 @@ def get_ticket_messages(ticket_id: str) -> dict:
             (ticket_id,),
         ).fetchall()
         return {"found": len(rows) > 0, "messages": [dict(r) for r in rows]}
+    finally:
+        conn.close()
+
+
+def append_ticket_message(ticket_id: str, role: str, content: str) -> dict:
+    """
+    Write one turn of the conversation to the ticket.
+
+    This is what makes history survive a restart: the checkpointer keeps a live
+    session going, but `ticket_messages` is the durable record a returning
+    customer's next ticket can be read against.
+
+    Not a tool. The workflow calls it after every turn, so an agent cannot
+    forget to record the conversation.
+    """
+    if not ticket_id or not content:
+        return {"saved": False, "message": "Need both a ticket id and content."}
+
+    if role not in {"user", "agent", "ai", "system"}:
+        return {"saved": False, "message": f"Unknown role '{role}'."}
+
+    conn = connect(CORE_DB)
+    try:
+        message_id = str(uuid.uuid4())
+        conn.execute(
+            """
+            INSERT INTO ticket_messages (message_id, ticket_id, role, content, created_at)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                message_id,
+                ticket_id,
+                role,
+                content,
+                datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+            ),
+        )
+        conn.commit()
+        return {"saved": True, "message_id": message_id}
+    except Exception as error:  # a logging failure must not sink the answer
+        return {"saved": False, "message": str(error)}
     finally:
         conn.close()
 

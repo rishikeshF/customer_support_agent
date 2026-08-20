@@ -27,6 +27,18 @@ def init_long_term_memory() -> None:
             )
             """
         )
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS resolved_issues (
+                issue_id    INTEGER PRIMARY KEY AUTOINCREMENT,
+                customer_id TEXT NOT NULL,
+                domain      TEXT,
+                summary     TEXT NOT NULL,
+                outcome     TEXT NOT NULL,
+                resolved_at TEXT NOT NULL
+            )
+            """
+        )
         conn.commit()
     finally:
         conn.close()
@@ -83,3 +95,63 @@ def load_preferences_text(customer_id: str) -> str:
     if not result["found"]:
         return "none on file"
     return "; ".join(f"{p['key']}={p['value']}" for p in result["preferences"])
+
+
+def remember_resolved_issue(customer_id: str, domain: str, summary: str, outcome: str) -> dict:
+    """
+    Record how a ticket ended, so a later session knows what already happened.
+
+    Called by the workflow rather than exposed as a tool: the outcome is decided
+    by the graph, not by the agent answering the question.
+    """
+    if not customer_id or customer_id == "unknown":
+        return {"saved": False, "message": "No customer to attach this to."}
+
+    conn = connect(CORE_DB)
+    try:
+        conn.execute(
+            """
+            INSERT INTO resolved_issues (customer_id, domain, summary, outcome, resolved_at)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (customer_id, domain, summary[:500], outcome, datetime.now(timezone.utc).isoformat()),
+        )
+        conn.commit()
+        return {"saved": True}
+    finally:
+        conn.close()
+
+
+@tool
+def recall_past_issues(customer_id: str, limit: int = 5) -> dict:
+    """
+    Look up how this customer's previous tickets were resolved.
+
+    Use it when a customer refers to an earlier problem, or to avoid repeating
+    advice that already failed for them.
+    """
+    conn = connect(CORE_DB)
+    try:
+        rows = conn.execute(
+            """
+            SELECT domain, summary, outcome, resolved_at
+            FROM resolved_issues
+            WHERE customer_id = ?
+            ORDER BY resolved_at DESC
+            LIMIT ?
+            """,
+            (customer_id, max(1, min(limit, 20))),
+        ).fetchall()
+        return {"found": len(rows) > 0, "issues": [dict(r) for r in rows]}
+    finally:
+        conn.close()
+
+
+def load_history_text(customer_id: str, limit: int = 3) -> str:
+    """The most recent resolved issues, formatted for a prompt."""
+    result = recall_past_issues.invoke({"customer_id": customer_id, "limit": limit})
+    if not result["found"]:
+        return "no previous tickets"
+    return "; ".join(
+        f"{i['domain']}: {i['summary']} ({i['outcome']})" for i in result["issues"]
+    )
