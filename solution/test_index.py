@@ -159,6 +159,7 @@ def test_load_preferences_text_when_empty():
 def test_graph_has_expected_nodes():
     nodes = set(ix.support_graph.get_graph().nodes)
     assert {
+        "resolve_context",
         "load_memory",
         "classify_urgency",
         "handle_normal",
@@ -216,6 +217,45 @@ def test_build_agent_messages_includes_context_and_history():
     assert DEMO_TICKET in context
     assert "preferred_contact=email" in context
     assert messages[1].content == "hello"
+
+
+def test_resolve_context_from_thread_id_alone():
+    """chat_interface only passes messages and a thread_id; the rest is looked up."""
+    state = {"messages": [ix.HumanMessage(content="hi there")]}
+    resolved = ix.resolve_context(state, {"configurable": {"thread_id": DEMO_TICKET}})
+
+    assert resolved["query"] == "hi there"
+    assert resolved["ticket_id"] == DEMO_TICKET
+    assert resolved["customer_id"] == DEMO_CUSTOMER
+
+
+def test_resolve_context_with_unknown_thread_id():
+    """A thread id that is not a ticket must not be mistaken for one."""
+    state = {"messages": [ix.HumanMessage(content="hi")]}
+    resolved = ix.resolve_context(state, {"configurable": {"thread_id": "1"}})
+
+    assert resolved["ticket_id"] is None
+    assert resolved["customer_id"] == "unknown"
+
+
+def test_resolve_context_prefers_explicit_values():
+    state = {
+        "messages": [ix.HumanMessage(content="ignored")],
+        "query": "the real query",
+        "customer_id": DEMO_CUSTOMER,
+        "ticket_id": DEMO_TICKET,
+    }
+    resolved = ix.resolve_context(state, {"configurable": {"thread_id": "something-else"}})
+
+    assert resolved["query"] == "the real query"
+    assert resolved["ticket_id"] == DEMO_TICKET
+
+
+def test_orchestrator_is_the_support_graph():
+    """03_agentic_app.ipynb imports `orchestrator`; it must be the same graph."""
+    from agentic.workflow import orchestrator
+
+    assert orchestrator is ix.support_graph
 
 
 def test_escalation_without_ticket_id_does_not_call_agent():
