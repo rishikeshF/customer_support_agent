@@ -1,0 +1,8 @@
+Collecting faiss-cpu
+  Downloading faiss_cpu-1.15.0-cp310-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (7.8 kB)
+Requirement already satisfied: numpy>=1.25 in /opt/venv/lib/python3.13/site-packages (from faiss-cpu) (2.3.2)
+Requirement already satisfied: packaging in /opt/venv/lib/python3.13/site-packages (from faiss-cpu) (25.0)
+Downloading faiss_cpu-1.15.0-cp310-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (18.8 MB)
+[?25l   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m0.0/18.8 MB[0m [31m?[0m eta [36m-:--:--[0m[2K   [91m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m[91m╸[0m [32m18.6/18.8 MB[0m [31m134.2 MB/s[0m eta [36m0:00:01[0m[2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m18.8/18.8 MB[0m [31m100.5 MB/s[0m eta [36m0:00:00[0m
+[?25hInstalling collected packages: faiss-cpu
+Successfully installed faiss-cpu-1.15.0

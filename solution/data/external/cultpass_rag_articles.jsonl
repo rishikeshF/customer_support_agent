@@ -1,0 +1,181 @@
+[
+  {
+    "article_id": "billing_001",
+    "category": "billing",
+    "title": "How refunds are processed",
+    "content": "Refunds are typically issued to the original payment method. Processing times depend on the bank or card provider and may take 5 to 10 business days after approval.",
+    "tags": ["refund", "payment", "billing"]
+  },
+  {
+    "article_id": "billing_002",
+    "category": "billing",
+    "title": "Why a payment may fail",
+    "content": "Payments can fail due to expired cards, insufficient funds, bank restrictions, or incorrect billing details. Customers should verify their payment information and try again.",
+    "tags": ["payment failure", "card", "billing"]
+  },
+  {
+    "article_id": "billing_003",
+    "category": "billing",
+    "title": "Updating billing information",
+    "content": "Customers can update their billing information from the account settings page. Changes to payment methods apply to future charges only.",
+    "tags": ["billing info", "payment method", "account"]
+  },
+  {
+    "article_id": "billing_004",
+    "category": "billing",
+    "title": "Understanding duplicate charges",
+    "content": "A duplicate charge may appear as a temporary authorization or as two separate transactions. Support should verify the transaction history before issuing a refund.",
+    "tags": ["duplicate charge", "authorization", "refund"]
+  },
+  {
+    "article_id": "billing_005",
+    "category": "billing",
+    "title": "When invoices are generated",
+    "content": "Invoices are generated at the time of successful payment. Customers can download invoice history from their billing section if that feature is enabled.",
+    "tags": ["invoice", "receipt", "billing history"]
+  },
+
+  {
+    "article_id": "reservation_001",
+    "category": "reservation",
+    "title": "How to reschedule a reservation",
+    "content": "Reservations can be rescheduled from the bookings page before the cutoff window. After the cutoff, changes may not be allowed depending on the venue policy.",
+    "tags": ["reservation", "reschedule", "booking"]
+  },
+  {
+    "article_id": "reservation_002",
+    "category": "reservation",
+    "title": "Why a reservation was cancelled",
+    "content": "Reservations may be cancelled automatically if the venue becomes unavailable, the booking violates policy, or required confirmation steps were not completed.",
+    "tags": ["reservation cancelled", "booking issue", "venue"]
+  },
+  {
+    "article_id": "reservation_003",
+    "category": "reservation",
+    "title": "Reservation no-show policy",
+    "content": "If a customer does not attend a reservation and does not cancel in time, the booking may be marked as a no-show and penalties may apply based on policy.",
+    "tags": ["no-show", "reservation", "policy"]
+  },
+  {
+    "article_id": "reservation_004",
+    "category": "reservation",
+    "title": "How to check reservation status",
+    "content": "Customers can view reservation status in the bookings section. Common statuses include confirmed, pending, cancelled, completed, and no-show.",
+    "tags": ["reservation status", "booking", "confirmed"]
+  },
+  {
+    "article_id": "reservation_005",
+    "category": "reservation",
+    "title": "Late arrival for reservations",
+    "content": "Some venues allow a short grace period for late arrivals. After that period, the reservation may be released or marked as missed according to venue rules.",
+    "tags": ["late arrival", "grace period", "reservation"]
+  },
+
+  {
+    "article_id": "technical_001",
+    "category": "technical",
+    "title": "Troubleshooting login issues",
+    "content": "If a customer cannot log in, they should verify their email and password, reset the password if needed, and ensure the app is updated to the latest version.",
+    "tags": ["login", "password reset", "technical"]
+  },
+  {
+    "article_id": "technical_002",
+    "category": "technical",
+    "title": "App crashes during checkout",
+    "content": "If the app crashes during checkout, customers should restart the app, clear cache if available, and retry on a stable network connection.",
+    "tags": ["app crash", "checkout", "technical"]
+  },
+  {
+    "article_id": "technical_003",
+    "category": "technical",
+    "title": "Verification email not received",
+    "content": "Customers should check spam folders, confirm the email address is correct, and request a new verification email. Delivery delays may occur with some providers.",
+    "tags": ["verification", "email", "technical"]
+  },
+  {
+    "article_id": "technical_004",
+    "category": "technical",
+    "title": "Trouble loading account data",
+    "content": "If account data does not load, the issue may be caused by network instability or a temporary backend problem. Retrying after a short wait often resolves it.",
+    "tags": ["account data", "loading", "network"]
+  },
+  {
+    "article_id": "technical_005",
+    "category": "technical",
+    "title": "Push notifications not working",
+    "content": "Customers should confirm notification permissions are enabled on the device and that the app is allowed to run background services if required.",
+    "tags": ["notifications", "permissions", "technical"]
+  },
+
+  {
+    "article_id": "subscription_001",
+    "category": "subscription",
+    "title": "How to upgrade a subscription",
+    "content": "Customers can upgrade from the subscription page. The new plan may take effect immediately or at the next billing cycle depending on the billing rules.",
+    "tags": ["upgrade", "subscription", "plan"]
+  },
+  {
+    "article_id": "subscription_002",
+    "category": "subscription",
+    "title": "How to cancel auto-renewal",
+    "content": "Auto-renewal can be turned off from subscription settings. Access usually remains active until the end of the current billing period.",
+    "tags": ["cancel", "auto-renewal", "subscription"]
+  },
+  {
+    "article_id": "subscription_003",
+    "category": "subscription",
+    "title": "Subscription benefits not visible",
+    "content": "If benefits are missing, support should verify the subscription is active and correctly linked to the customer account before escalating the issue.",
+    "tags": ["benefits", "active plan", "subscription"]
+  },
+  {
+    "article_id": "subscription_004",
+    "category": "subscription",
+    "title": "Paused versus cancelled subscriptions",
+    "content": "A paused subscription is temporarily inactive and may resume later, while a cancelled subscription ends and does not renew unless purchased again.",
+    "tags": ["paused", "cancelled", "subscription"]
+  },
+  {
+    "article_id": "subscription_005",
+    "category": "subscription",
+    "title": "Changing subscription plans",
+    "content": "Customers may switch between eligible plans from the subscription management page. Pricing adjustments depend on the timing of the change.",
+    "tags": ["plan change", "subscription", "pricing"]
+  },
+
+  {
+    "article_id": "general_001",
+    "category": "general",
+    "title": "How to contact support",
+    "content": "Customers can contact support through the help center, in-app chat, or email depending on the support channels available for their account.",
+    "tags": ["support", "contact", "help"]
+  },
+  {
+    "article_id": "general_002",
+    "category": "general",
+    "title": "Updating profile information",
+    "content": "Profile details such as name, phone number, and preferences can usually be updated from the account settings page.",
+    "tags": ["profile", "account settings", "general"]
+  },
+  {
+    "article_id": "general_003",
+    "category": "general",
+    "title": "Understanding account verification",
+    "content": "Account verification helps confirm customer identity and may be required for security, payments, or access to certain features.",
+    "tags": ["verification", "account", "security"]
+  },
+  {
+    "article_id": "general_004",
+    "category": "general",
+    "title": "Where to find booking history",
+    "content": "Customers can review past and upcoming bookings from the booking history or activity section of the app or website.",
+    "tags": ["booking history", "activity", "general"]
+  },
+  {
+    "article_id": "general_005",
+    "category": "general",
+    "title": "How account notifications work",
+    "content": "Account notifications may include booking updates, billing alerts, and promotional messages. Notification preferences can often be customized.",
+    "tags": ["notifications", "preferences", "general"]
+  }
+]
