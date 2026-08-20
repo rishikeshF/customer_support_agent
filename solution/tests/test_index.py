@@ -369,6 +369,78 @@ def test_log_tool_calls_reads_calls_off_messages():
 
 
 # ---------------------------------------------------------------------------
+# Offline: grounding
+# ---------------------------------------------------------------------------
+
+ARTICLE_A = "billing_001"
+ARTICLE_B = "billing_004"
+
+
+def test_the_citable_corpus_is_the_vector_store():
+    known = ix.known_article_ids()
+    assert {ARTICLE_A, ARTICLE_B} <= known
+
+
+def test_extract_citations_reads_article_ids_off_an_answer():
+    text = f"Refunds take 5 days.\n\nSources: How refunds are processed ({ARTICLE_A})"
+    assert ix.extract_citations(text) == [ARTICLE_A]
+
+
+def test_extract_citations_keeps_the_order_they_appear_in():
+    text = f"Sources: ... ({ARTICLE_B}), ... ({ARTICLE_A})"
+    assert ix.extract_citations(text) == [ARTICLE_B, ARTICLE_A]
+
+
+def test_extract_citations_ignores_an_article_id_that_does_not_exist():
+    """An invented id is not a source, so it must not be recorded as one."""
+    assert ix.extract_citations("Sources: Refund Policy (billing_999)") == []
+
+
+def test_extract_citations_is_empty_when_nothing_was_cited():
+    assert ix.extract_citations("Sources: customer records") == []
+    assert ix.extract_citations("") == []
+
+
+def test_experts_are_told_to_cite_their_sources():
+    """The Sources line is what makes the grounding checkable afterwards."""
+    prompt = ix.expert_prompt("billing", "[BILLING EXPERT]")
+
+    assert "Sources:" in prompt
+    assert "article_id" in prompt
+    assert "customer records" in prompt
+
+
+def test_read_only_experts_are_not_told_they_can_act():
+    """Without the MCP tools attached, the prompt must not promise operations."""
+    assert "refunds, cancellations" not in ix.expert_prompt("billing", "[X]")
+    assert "refunds, cancellations" in ix.expert_prompt("billing", "[X]", has_operations=True)
+
+
+def test_retrieved_articles_are_handed_to_the_agent():
+    """The expert should not have to search again for what we just retrieved."""
+    state = {
+        "messages": [],
+        "customer_id": DEMO_CUSTOMER,
+        "ticket_id": DEMO_TICKET,
+        "knowledge_articles": [{"article_id": ARTICLE_A, "title": "How Refunds Work"}],
+    }
+    context = ix.build_agent_messages(state, "Resolve this.")[0].content
+
+    assert ARTICLE_A in context
+    assert "How Refunds Work" in context
+
+
+def test_no_retrieved_articles_says_so():
+    state = {
+        "messages": [],
+        "customer_id": DEMO_CUSTOMER,
+        "ticket_id": DEMO_TICKET,
+    }
+    context = ix.build_agent_messages(state, "Resolve this.")[0].content
+    assert "none" in context
+
+
+# ---------------------------------------------------------------------------
 # Offline: persistent history
 # ---------------------------------------------------------------------------
 
@@ -508,6 +580,20 @@ def test_a_turn_is_logged_end_to_end():
     for expected in ["ticket_received", "memory_recalled", "classified",
                      "knowledge_checked", "routed", "resolved"]:
         assert expected in events, f"{expected} missing from the log"
+
+
+@pytest.mark.llm
+def test_a_knowledge_answer_cites_a_real_article():
+    """An answer drawn from the knowledge base must name the article behind it."""
+    result = ix.run_support_query(
+        "How do refunds work on my CultPass card?",
+        DEMO_CUSTOMER,
+        DEMO_TICKET,
+        thread_id=f"test-citations-{uuid.uuid4().hex[:8]}",
+    )
+
+    assert result["citations"], f"no article cited in: {result['response']}"
+    assert set(result["citations"]) <= ix.known_article_ids()
 
 
 @pytest.mark.llm

@@ -1,7 +1,13 @@
-"""One-off generator: rebuilds index.ipynb from the agentic/ module sources.
+"""Generator: rebuilds index.ipynb and index_mcp.ipynb from the agentic/ sources.
 
-Keeping the notebook generated rather than hand-copied means it cannot drift
-away from the code that actually runs. Re-run it after changing agentic/.
+Keeping the notebooks generated rather than hand-copied means they cannot drift
+away from the code that actually runs. Re-run after changing agentic/.
+
+    index.ipynb       the system as it runs by default: read-only tools
+    index_mcp.ipynb   the same system with the MCP operation tools attached
+
+The two share every cell up to "Try it"; the MCP notebook adds the section that
+starts the server and rebuilds the agents with its tools.
 """
 
 import json
@@ -105,6 +111,66 @@ print("past issues:", load_history_text(DEMO_CUSTOMER))
 # And the durable conversation record on the ticket itself.
 get_ticket_messages.invoke({"ticket_id": DEMO_TICKET})'''
 
+MCP_ENABLE = '''# Start the MCP server (as a child process) and take its tools.
+mcp_tools = load_mcp_tools()
+print("operations available:", [t.name for t in mcp_tools])'''
+
+MCP_ATTACH = '''# Rebuild the agents with the operation tools attached. The graph looks agents
+# up by name at call time, so it picks these up without being recompiled.
+experts.update(build_experts(mcp_tools))
+agent_swarm_map.update(build_agent_swarm(mcp_tools))
+agent_teams.update(build_teams(agent_swarm_map))
+
+sorted(experts["billing"].get_graph().nodes["tools"].data.tools_by_name)'''
+
+MCP_DEMO = '''# The billing expert can now act on the account, not just describe the policy.
+run_support_query(
+    query="Please cancel my reservation for the workshop and refund it.",
+    customer_id=DEMO_CUSTOMER,
+    ticket_id=DEMO_TICKET,
+)'''
+
+
+def mcp_cells() -> list:
+    """The section that turns the read-only system into an acting one."""
+    server_source = (BASE / "agentic/mcp/server.py").read_text(encoding="utf-8")
+    return [
+        md(
+            "## Support operations over MCP\n"
+            "\n"
+            "Everything above is read-only: the agents look things up and explain. "
+            "The write operations — refunds, cancellations, subscription and account "
+            "changes — live behind an MCP server instead, so the agents reach them "
+            "over a protocol boundary they cannot bypass, and the same server can be "
+            "pointed at a real CultPass backend later without touching agent code.\n"
+            "\n"
+            "| Operation | What it does |\n"
+            "| --- | --- |\n"
+            "| `process_refund` | Refunds a reservation and records the refund |\n"
+            "| `cancel_reservation` | Cancels a booking and releases the slot |\n"
+            "| `set_subscription_status` | Pauses, resumes or cancels a subscription |\n"
+            "| `change_subscription_tier` | Moves between basic and premium |\n"
+            "| `set_account_blocked` | Blocks or unblocks an account |\n"
+            "\n"
+            "Each one checks that the customer owns what they are acting on, and "
+            "refuses an operation that has already happened.\n"
+        ),
+        md(
+            "The server is `agentic/mcp/server.py`. It is **not** flattened into this "
+            "notebook, because it runs as its own process — that separation is the "
+            "point of putting it behind MCP. For reference:\n"
+            "\n"
+            "```python\n" + server_source + "```\n"
+        ),
+        md("The client starts that process over stdio and adapts its tools for LangGraph.\n"),
+        code(source_of("agentic/mcp/client.py")),
+        code(MCP_ENABLE),
+        code(MCP_ATTACH),
+    ]
+
+
+TRY_IT = md("## Try it\n")
+
 cells = [
     md(
         "# UDA-Hub\n"
@@ -131,6 +197,10 @@ cells = [
         "`build_index_nb.py`.** The package is the code that actually runs; this "
         "notebook is a flattened, readable copy of it. Edit `agentic/` and re-run "
         "the generator rather than editing cells here.\n"
+        "\n"
+        "The agents here are read-only. `index_mcp.ipynb` is this same notebook with "
+        "the MCP operation tools attached, so the agents can also issue refunds, "
+        "cancel reservations and change plans.\n"
     ),
     md("## Setup\n"),
     code("# !pip install -r ../requirements.txt\n"),
@@ -176,7 +246,7 @@ cells = [
     code(source_of("agentic/agents/escalation.py")),
     md("## The orchestrator graph\n"),
     code(source_of("agentic/workflow.py")),
-    md("## Try it\n"),
+    TRY_IT,
     code(DRAW),
     code(DEMO),
     code(DEMO_URGENT),
@@ -189,20 +259,32 @@ cells = [
     code(DEMO_MEMORY),
 ]
 
-notebook = {
-    "cells": cells,
-    "metadata": {
-        "kernelspec": {
-            "display_name": "Python 3",
-            "language": "python",
-            "name": "python3",
-        },
-        "language_info": {"name": "python", "version": "3.13.12"},
-    },
-    "nbformat": 4,
-    "nbformat_minor": 5,
-}
 
-target = BASE / "index.ipynb"
-target.write_text(json.dumps(notebook, indent=1) + "\n", encoding="utf-8")
-print(f"wrote {target} with {len(cells)} cells")
+def write(filename: str, notebook_cells: list) -> None:
+    notebook = {
+        "cells": notebook_cells,
+        "metadata": {
+            "kernelspec": {
+                "display_name": "Python 3",
+                "language": "python",
+                "name": "python3",
+            },
+            "language_info": {"name": "python", "version": "3.13.12"},
+        },
+        "nbformat": 4,
+        "nbformat_minor": 5,
+    }
+    target = BASE / filename
+    target.write_text(json.dumps(notebook, indent=1) + "\n", encoding="utf-8")
+    print(f"wrote {target} with {len(notebook_cells)} cells")
+
+
+write("index.ipynb", cells)
+
+# The MCP notebook is the same system, with the operation tools switched on just
+# before the demos, plus one demo that actually changes the account.
+split = cells.index(TRY_IT)
+write(
+    "index_mcp.ipynb",
+    cells[:split] + mcp_cells() + cells[split:] + [md("### An operation, end to end\n"), code(MCP_DEMO)],
+)

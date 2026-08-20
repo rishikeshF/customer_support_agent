@@ -220,3 +220,5 @@ __marimo__/
 # runtime artifacts
 solution/data/logs/
 solution/data/core/checkpoints.db
+solution/data/core/checkpoints.db-shm
+solution/data/core/checkpoints.db-wal

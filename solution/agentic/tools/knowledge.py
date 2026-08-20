@@ -1,6 +1,8 @@
-"""RAG tools: semantic search over the support knowledge base, and a check on
-whether that knowledge base can actually answer a given question."""
+"""RAG tools: semantic search over the support knowledge base, a check on
+whether that knowledge base can actually answer a given question, and the
+citation helper that proves an answer was grounded in it."""
 
+from functools import lru_cache
 from typing import Literal, Optional
 
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -120,3 +122,42 @@ def assess_knowledge_confidence(query: str) -> dict:
         "reason": result.reason,
         "articles": articles,
     }
+
+
+@lru_cache(maxsize=1)
+def known_article_ids() -> frozenset:
+    """
+    Every article id in the vector store: the corpus an answer may cite.
+
+    Read once and cached — the store is loaded at import and does not change
+    while the process runs.
+    """
+    store = vectorstore.docstore
+    ids = (
+        store.search(doc_id).metadata.get("article_id")
+        for doc_id in vectorstore.index_to_docstore_id.values()
+    )
+    return frozenset(article_id for article_id in ids if article_id)
+
+
+def extract_citations(text: str, known: Optional[frozenset] = None) -> list[str]:
+    """
+    Pull the article ids an answer cited, in the order they appear.
+
+    Experts are told to end a knowledge-based answer with a `Sources:` line, so
+    this is how `finalize` records which articles an answer actually rested on.
+
+    Matching against the real ids rather than against a pattern is what keeps a
+    citation meaningful: an id the expert made up matches nothing, so it is not
+    recorded as a source. An empty list therefore means the answer cited nothing
+    real — either it came from the customer's own records, or it was ungrounded.
+    """
+    if not text:
+        return []
+
+    found = []
+    for article_id in known if known is not None else known_article_ids():
+        position = text.find(article_id)
+        if position != -1:
+            found.append((position, article_id))
+    return [article_id for _, article_id in sorted(found)]

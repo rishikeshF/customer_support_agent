@@ -16,7 +16,12 @@ from agentic.tools.customer import (
     get_user_reservations,
     get_user_subscription,
 )
-from agentic.tools.knowledge import assess_knowledge_confidence, search_rag_knowledge_base
+from agentic.tools.knowledge import (
+    assess_knowledge_confidence,
+    extract_citations,
+    known_article_ids,
+    search_rag_knowledge_base,
+)
 from agentic.tools.memory import (
     init_long_term_memory,
     load_history_text,
@@ -49,6 +54,8 @@ __all__ = [
     "agentic_tools",
     "search_rag_knowledge_base",
     "assess_knowledge_confidence",
+    "extract_citations",
+    "known_article_ids",
     "get_account_user_by_external_id",
     "get_user_subscription",
     "get_user_reservations",

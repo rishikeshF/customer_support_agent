@@ -39,6 +39,7 @@ from agentic.tools import (
     append_ticket_message,
     assess_knowledge_confidence,
     domain_detector,
+    extract_citations,
     get_ticket_details,
     load_history_text,
     load_preferences_text,
@@ -60,6 +61,8 @@ class SupportState(MessagesState):
     domain: Optional[str]
     knowledge_confidence: Optional[float]
     knowledge_reason: Optional[str]
+    knowledge_articles: Optional[List[Dict[str, Any]]]  # what check_knowledge retrieved
+    citations: Optional[List[str]]              # article ids the answer cited
     escalation_reason: Optional[str]
     handled_by: Optional[str]
     tools_used: Optional[List[str]]
@@ -71,6 +74,18 @@ class SupportState(MessagesState):
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+def render_articles(articles: Optional[List[Dict[str, Any]]]) -> str:
+    """
+    List the articles `check_knowledge` already retrieved, ids included.
+
+    The expert gets these before it starts, so it can cite an article id without
+    having to search again for something we have already looked up.
+    """
+    if not articles:
+        return "  none"
+    return "\n".join(f"  - {a['title']} ({a['article_id']})" for a in articles)
+
 
 def build_agent_messages(state: SupportState, header: str) -> List[Any]:
     """
@@ -88,6 +103,8 @@ def build_agent_messages(state: SupportState, header: str) -> List[Any]:
             f"Ticket tags: {metadata.get('tags') or 'none'}\n"
             f"Known customer preferences: {state.get('preferences') or 'none on file'}\n"
             f"Previously resolved issues: {state.get('history') or 'no previous tickets'}\n"
+            f"Knowledge base articles already retrieved for this question:\n"
+            f"{render_articles(state.get('knowledge_articles'))}\n"
             f"{header}"
         )
     )
@@ -231,6 +248,7 @@ def check_knowledge(state: SupportState) -> dict:
     return {
         "knowledge_confidence": assessment["confidence"],
         "knowledge_reason": assessment["reason"],
+        "knowledge_articles": assessment["articles"],
     }
 
 
@@ -253,12 +271,14 @@ def handle_normal(state: SupportState) -> dict:
     )
     tools_used = log_tool_calls(result["messages"], agent=expert.name, **log_context(state))
     answer = as_text(result["messages"][-1].content)
+    citations = extract_citations(answer)
 
     return {
         "messages": [AIMessage(content=answer)],
         "domain": domain,
         "handled_by": expert.name,
         "tools_used": tools_used,
+        "citations": citations,
         "response": answer,
         "status": "resolved",
     }
@@ -289,12 +309,14 @@ def handle_urgent(state: SupportState) -> dict:
               **log_context(state))
     tools_used = log_tool_calls(result["messages"], agent=chosen, **log_context(state))
     answer = as_text(result["messages"][-1].content)
+    citations = extract_citations(answer)
 
     return {
         "messages": [AIMessage(content=answer)],
         "domain": domain,
         "handled_by": chosen,
         "tools_used": tools_used,
+        "citations": citations,
         "response": answer,
         "status": "urgent_handled",
         "rr_index": rr_index,
@@ -326,6 +348,7 @@ def handle_escalation(state: SupportState) -> dict:
         return {
             "messages": [AIMessage(content=answer)],
             "escalation_reason": reason,
+            "citations": [],
             "response": answer,
             "status": "pending",
         }
@@ -350,6 +373,9 @@ def handle_escalation(state: SupportState) -> dict:
         "handled_by": "escalation_agent",
         "escalation_reason": reason,
         "tools_used": tools_used,
+        # An escalated turn answers nothing, so it cites nothing. Clearing this
+        # stops a previous turn's citations being logged against this one.
+        "citations": [],
         "response": answer,
         "status": "escalated",
     }
@@ -384,6 +410,7 @@ def finalize(state: SupportState) -> dict:
         escalation_reason=state.get("escalation_reason"),
         confidence=state.get("knowledge_confidence"),
         tools_used=state.get("tools_used"),
+        citations=state.get("citations") or None,
         **log_context(state),
     )
     return {}
@@ -470,6 +497,7 @@ def run_support_query(
         "handled_by": result.get("handled_by"),
         "escalation_reason": result.get("escalation_reason"),
         "tools_used": result.get("tools_used"),
+        "citations": result.get("citations"),
         "status": result.get("status"),
         "response": result.get("response"),
     }

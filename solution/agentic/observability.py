@@ -11,7 +11,12 @@ Events emitted by the workflow:
     knowledge_checked   knowledge base confidence scored
     routed              which agent or team took the ticket
     tool_used           a tool an agent called, one event per call
-    resolved            final outcome of the turn
+    resolved            final outcome of the turn, including the articles cited
+
+And, when the optional MCP layer is switched on:
+
+    mcp_tools_loaded    the operation tools were attached
+    mcp_unavailable     the server could not be reached; still read-only
 """
 
 import json

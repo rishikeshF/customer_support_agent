@@ -6,7 +6,7 @@ the caller's state (see `rr_index` in `agentic.workflow`), so the rotation
 survives between tickets instead of resetting to the first agent every time.
 """
 
-from typing import List
+from typing import Dict, List
 
 from langgraph.graph import START, StateGraph
 from langgraph.graph.message import MessagesState
@@ -50,7 +50,9 @@ def create_team(name: str, agent_pool: List[CompiledStateGraph]) -> CompiledStat
     return workflow.compile(name=name)
 
 
-agent_teams = {
-    team_name: create_team(team_name, pool)
-    for team_name, pool in agent_swarm_map.items()
-}
+def build_teams(swarm: Dict[str, List[CompiledStateGraph]]) -> Dict[str, CompiledStateGraph]:
+    """One team graph per domain, wrapping that domain's pool of agents."""
+    return {team_name: create_team(team_name, pool) for team_name, pool in swarm.items()}
+
+
+agent_teams = build_teams(agent_swarm_map)

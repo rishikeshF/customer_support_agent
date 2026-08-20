@@ -29,8 +29,16 @@ CHECKPOINT_DB = BASE_DIR / "data" / "core" / "checkpoints.db"
 # let an agent answer it. Below this, the ticket goes to a human instead.
 KNOWLEDGE_CONFIDENCE_THRESHOLD = 0.5
 
-API_KEY = os.getenv("VOCAREUM_API_KEY") or os.getenv("OPENAI_API_KEY")
-BASE_URL = os.getenv("OPENAI_BASE_URL", "https://openai.vocareum.com/v1")
+# Prefer a real OpenAI key when there is one, and fall back to the Vocareum
+# proxy. Setting OPENAI_BASE_URL overrides either choice.
+if os.getenv("OPENAI_API_KEY"):
+    API_KEY = os.getenv("OPENAI_API_KEY")
+    DEFAULT_BASE_URL = "https://api.openai.com/v1"
+else:
+    API_KEY = os.getenv("VOCAREUM_API_KEY")
+    DEFAULT_BASE_URL = "https://openai.vocareum.com/v1"
+
+BASE_URL = os.getenv("OPENAI_BASE_URL", DEFAULT_BASE_URL)
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",

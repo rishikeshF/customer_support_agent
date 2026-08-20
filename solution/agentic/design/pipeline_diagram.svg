@@ -1,0 +1,188 @@
+<svg viewBox="0 0 1400 1780" width="1400" height="1780" xmlns="http://www.w3.org/2000/svg" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif">
+<defs>
+  <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#0C1224"/>
+    <stop offset="100%" stop-color="#080B15"/>
+  </linearGradient>
+  <radialGradient id="haloAmber" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#F6AD55" stop-opacity="0.16"/>
+    <stop offset="100%" stop-color="#F6AD55" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="haloTeal" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#4FD1C5" stop-opacity="0.16"/>
+    <stop offset="100%" stop-color="#4FD1C5" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="haloCoral" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#F87171" stop-opacity="0.16"/>
+    <stop offset="100%" stop-color="#F87171" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+    <feGaussianBlur stdDeviation="3.2" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#8493B0"/>
+  </marker>
+  <marker id="arrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#F6AD55"/>
+  </marker>
+  <marker id="arrowTeal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#4FD1C5"/>
+  </marker>
+  <marker id="arrowCoral" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#F87171"/>
+  </marker>
+  <marker id="arrowViolet" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#A78BFA"/>
+  </marker>
+  <marker id="arrowData" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#38BDF8"/>
+  </marker>
+  <marker id="arrowMcp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#C9A8FA"/>
+  </marker>
+</defs>
+<rect width="1400" height="1780" fill="url(#bgGrad)"/>
+<circle cx="280" cy="640" r="260" fill="url(#haloAmber)"/>
+<circle cx="700" cy="640" r="260" fill="url(#haloTeal)"/>
+<circle cx="1150" cy="640" r="260" fill="url(#haloCoral)"/>
+
+<text x="700.0" y="56" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="27" font-weight="800" fill="#E7ECF7" text-anchor="middle" opacity="1" letter-spacing="0.5px" >SUPPORT AGENT PIPELINE</text>
+<text x="700.0" y="82" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="13.5" font-weight="400" fill="#5B6B8C" text-anchor="middle" opacity="1"  >customer message  →  routed resolution  →  ticket + long-term memory</text>
+<ellipse cx="700" cy="140" rx="62" ry="26" fill="#111A2E" stroke="#5B6B8C" stroke-width="2"/>
+<text x="700" y="145" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="14" font-weight="700" fill="#E7ECF7" text-anchor="middle" opacity="1"  >user</text>
+<rect x="600.0" y="187.0" width="200" height="46" rx="10" ry="10" fill="#16213A" stroke="#2B3B5C" stroke-width="1.6" opacity="1"  />
+<rect x="600.0" y="187.0" width="200" height="4" rx="10" ry="10" fill="#2B3B5C" stroke="none" stroke-width="0" opacity="1"  />
+<text x="700" y="215" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="14.5" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >resolve_context</text>
+<rect x="600.0" y="262.0" width="200" height="46" rx="10" ry="10" fill="#16213A" stroke="#2B3B5C" stroke-width="1.6" opacity="1"  />
+<rect x="600.0" y="262.0" width="200" height="4" rx="10" ry="10" fill="#2B3B5C" stroke="none" stroke-width="0" opacity="1"  />
+<text x="700" y="290" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="14.5" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >load_memory</text>
+<polygon points="700,340.0 805.0,375 700,410.0 595.0,375" fill="#16213A" stroke="#8493B0" stroke-width="1.8"/>
+<text x="700" y="380" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >classify_urgency</text>
+<path d="M700,166 L700,187" fill="none" stroke="#8493B0" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrow)"/>
+<path d="M700,233 L700,262" fill="none" stroke="#8493B0" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrow)"/>
+<path d="M700,308 L700,340" fill="none" stroke="#8493B0" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrow)"/>
+<path d="M805,375 L1055,375" fill="none" stroke="#F87171" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrowCoral)"/>
+<rect x="881.84" y="349" width="96.32" height="17" rx="4" fill="#0A0F1C" opacity="0.88"/>
+<text x="930.0" y="362" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11" font-weight="500" fill="#F87171" text-anchor="middle" opacity="1"  >asked for a human</text>
+<polygon points="700,435.0 805.0,470 700,505.0 595.0,470" fill="#16213A" stroke="#8493B0" stroke-width="1.8"/>
+<text x="700" y="475" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >check_knowledge</text>
+<path d="M700,410 L700,435" fill="none" stroke="#8493B0" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrow)"/>
+<path d="M805,470 C1000,470 1030,430 1110,452" fill="none" stroke="#F87171" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrowCoral)"/>
+<rect x="869.52" y="435" width="140.96" height="17" rx="4" fill="#0A0F1C" opacity="0.88"/>
+<text x="940" y="448" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11" font-weight="500" fill="#F87171" text-anchor="middle" opacity="1"  >confidence below threshold</text>
+<path d="M595,472 Q280,472 280,598" fill="none" stroke="#F6AD55" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrowAmber)"/>
+<rect x="434.12" y="507" width="41.76" height="17" rx="4" fill="#0A0F1C" opacity="0.88"/>
+<text x="455" y="520" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11" font-weight="500" fill="#F6AD55" text-anchor="middle" opacity="1"  >urgent</text>
+<path d="M700,505 L700,598" fill="none" stroke="#4FD1C5" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrowTeal)"/>
+<rect x="734.12" y="542" width="41.76" height="17" rx="4" fill="#0A0F1C" opacity="0.88"/>
+<text x="755" y="555" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11" font-weight="500" fill="#4FD1C5" text-anchor="middle" opacity="1"  >normal</text>
+<rect x="175.0" y="607.0" width="210" height="50" rx="10" ry="10" fill="#16213A" stroke="#F6AD55" stroke-width="1.6" opacity="1"  />
+<rect x="175.0" y="607.0" width="210" height="4" rx="10" ry="10" fill="#F6AD55" stroke="none" stroke-width="0" opacity="1"  />
+<text x="280" y="630" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="14.5" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >handle_urgent</text>
+<text x="280" y="648" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11" font-weight="400" fill="#8493B0" text-anchor="middle" opacity="1"  >Supervisor 1</text>
+<rect x="595.0" y="607.0" width="210" height="50" rx="10" ry="10" fill="#16213A" stroke="#4FD1C5" stroke-width="1.6" opacity="1"  />
+<rect x="595.0" y="607.0" width="210" height="4" rx="10" ry="10" fill="#4FD1C5" stroke="none" stroke-width="0" opacity="1"  />
+<text x="700" y="630" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="14.5" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >handle_normal</text>
+<text x="700" y="648" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11" font-weight="400" fill="#8493B0" text-anchor="middle" opacity="1"  >Supervisor 2</text>
+<path d="M280,657 L280,690" fill="none" stroke="#F6AD55" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrowAmber)"/>
+<path d="M700,657 L700,690" fill="none" stroke="#4FD1C5" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrowTeal)"/>
+<polygon points="280,699.0 375.0,730 280,761.0 185.0,730" fill="#16213A" stroke="#F6AD55" stroke-width="1.8"/>
+<text x="280" y="735" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >domain_detector</text>
+<polygon points="700,699.0 795.0,730 700,761.0 605.0,730" fill="#16213A" stroke="#4FD1C5" stroke-width="1.8"/>
+<text x="700" y="735" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >domain_detector</text>
+<path d="M280,761 L280,792" fill="none" stroke="#F6AD55" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrowAmber)"/>
+<path d="M700,761 L700,792" fill="none" stroke="#4FD1C5" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrowTeal)"/>
+<rect x="155.0" y="800" width="250" height="226" rx="12" ry="12" fill="#111A2E" stroke="#F6AD55" stroke-width="1.4" opacity="1"  />
+<text x="280" y="824" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#F6AD55" text-anchor="middle" opacity="1"  >ROUND ROBIN</text>
+<text x="280" y="840" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="10.5" font-weight="400" fill="#5B6B8C" text-anchor="middle" opacity="1"  >3 agents per domain</text>
+<rect x="171.0" y="844" width="218" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="280" y="861" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >general_team</text>
+<rect x="171.0" y="878" width="218" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="280" y="895" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >billing_team</text>
+<rect x="171.0" y="912" width="218" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="280" y="929" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >reservation_team</text>
+<rect x="171.0" y="946" width="218" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="280" y="963" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >technical_team</text>
+<rect x="171.0" y="980" width="218" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="280" y="997" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >subscription_team</text>
+<rect x="575.0" y="800" width="250" height="226" rx="12" ry="12" fill="#111A2E" stroke="#4FD1C5" stroke-width="1.4" opacity="1"  />
+<text x="700" y="824" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#4FD1C5" text-anchor="middle" opacity="1"  >ONE EXPERT PER DOMAIN</text>
+<text x="700" y="840" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="10.5" font-weight="400" fill="#5B6B8C" text-anchor="middle" opacity="1"  >single specialist routes</text>
+<rect x="591.0" y="844" width="218" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="700" y="861" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >general_expert</text>
+<rect x="591.0" y="878" width="218" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="700" y="895" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >billing_expert</text>
+<rect x="591.0" y="912" width="218" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="700" y="929" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >reservation_expert</text>
+<rect x="591.0" y="946" width="218" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="700" y="963" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >technical_expert</text>
+<rect x="591.0" y="980" width="218" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="700" y="997" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >subscription_expert</text>
+<rect x="1045.0" y="472.0" width="210" height="56" rx="10" ry="10" fill="#16213A" stroke="#F87171" stroke-width="1.6" opacity="1"  />
+<rect x="1045.0" y="472.0" width="210" height="4" rx="10" ry="10" fill="#F87171" stroke="none" stroke-width="0" opacity="1"  />
+<text x="1150" y="498" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="14.5" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >escalation agent</text>
+<text x="1150" y="516" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11" font-weight="400" fill="#8493B0" text-anchor="middle" opacity="1"  >hands off to a human</text>
+<path d="M310.0,1082 A90.0,10 0 0 1 490.0,1082 L490.0,1138 A90.0,10 0 0 1 310.0,1138 Z" fill="#0D1B2E" stroke="RAG articles" stroke-width="1.6"/>
+<ellipse cx="400" cy="1082" rx="90.0" ry="10" fill="#12233B" stroke="RAG articles" stroke-width="1.6"/>
+<text x="400" y="1120.0" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12.5" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >vector store</text>
+<path d="M540.0,1082 A90.0,10 0 0 1 720.0,1082 L720.0,1138 A90.0,10 0 0 1 540.0,1138 Z" fill="#0D1B2E" stroke="udahub + cultpass" stroke-width="1.6"/>
+<ellipse cx="630" cy="1082" rx="90.0" ry="10" fill="#12233B" stroke="udahub + cultpass" stroke-width="1.6"/>
+<text x="630" y="1120.0" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12.5" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >SQLite</text>
+<path d="M320,1020 L370,1078" fill="none" stroke="#F6AD55" stroke-width="1.3" opacity="0.7"  marker-end="url(#arrowAmber)"/>
+<path d="M375,1020 L560,1078" fill="none" stroke="#F6AD55" stroke-width="1.3" opacity="0.5"  marker-end="url(#arrowAmber)"/>
+<path d="M605,1020 L470,1078" fill="none" stroke="#4FD1C5" stroke-width="1.3" opacity="0.5"  marker-end="url(#arrowTeal)"/>
+<path d="M660,1020 L660,1078" fill="none" stroke="#4FD1C5" stroke-width="1.3" opacity="0.7"  marker-end="url(#arrowTeal)"/>
+<rect x="530.0" y="1204" width="340" height="226" rx="12" ry="12" fill="#111A2E" stroke="#C9A8FA" stroke-width="1.4" opacity="1" stroke-dasharray="7,5" />
+<text x="700" y="1228" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#C9A8FA" text-anchor="middle" opacity="1"  >MCP SERVER — SEPARATE PROCESS</text>
+<text x="700" y="1244" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="10.5" font-weight="400" fill="#5B6B8C" text-anchor="middle" opacity="1"  >optional: enable_mcp() attaches these</text>
+<rect x="546.0" y="1248" width="308" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="700" y="1265" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >process_refund</text>
+<rect x="546.0" y="1282" width="308" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="700" y="1299" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >cancel_reservation</text>
+<rect x="546.0" y="1316" width="308" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="700" y="1333" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >set_subscription_status</text>
+<rect x="546.0" y="1350" width="308" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="700" y="1367" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >change_subscription_tier</text>
+<rect x="546.0" y="1384" width="308" height="26" rx="7" ry="7" fill="#16213A" stroke="#2B3B5C" stroke-width="1.1" opacity="1"  />
+<text x="700" y="1401" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" font-weight="500" fill="#E7ECF7" text-anchor="middle" opacity="1"  >set_account_blocked</text>
+<path d="M210,1022 C110,1106 110,1164 552.0,1212" fill="none" stroke="#F6AD55" stroke-width="1.5" opacity="0.75" stroke-dasharray="6,5" marker-end="url(#arrowAmber)"/>
+<rect x="86.16" y="1132.0" width="51.68" height="17" rx="4" fill="#0A0F1C" opacity="0.88"/>
+<text x="112" y="1145.0" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11" font-weight="500" fill="#F6AD55" text-anchor="middle" opacity="1"  >optional</text>
+<path d="M770,1022 C900,1106 900,1164 848.0,1212" fill="none" stroke="#4FD1C5" stroke-width="1.5" opacity="0.75" stroke-dasharray="6,5" marker-end="url(#arrowTeal)"/>
+<rect x="874.16" y="1102.0" width="51.68" height="17" rx="4" fill="#0A0F1C" opacity="0.88"/>
+<text x="900" y="1115.0" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11" font-weight="500" fill="#4FD1C5" text-anchor="middle" opacity="1"  >optional</text>
+<path d="M760,1206 L620,1150" fill="none" stroke="#38BDF8" stroke-width="1.6" opacity="0.9"  marker-end="url(#arrowData)"/>
+<rect x="585.0" y="1494.0" width="230" height="52" rx="10" ry="10" fill="#16213A" stroke="#C9D3E8" stroke-width="1.6" opacity="1"  />
+<rect x="585.0" y="1494.0" width="230" height="4" rx="10" ry="10" fill="#C9D3E8" stroke="none" stroke-width="0" opacity="1"  />
+<text x="700" y="1525" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="16" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >finalize</text>
+<path d="M280,1026 L280,1450 L660,1510" fill="none" stroke="#F6AD55" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrowAmber)"/>
+<path d="M700,1026 L700,1042 L970,1066 L970,1500 L710,1506" fill="none" stroke="#4FD1C5" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrowTeal)"/>
+<path d="M1150,528 L1150,1480 L740,1510" fill="none" stroke="#F87171" stroke-width="1.8" opacity="0.95"  marker-end="url(#arrowCoral)"/>
+<path d="M345.0,1620 A95.0,10 0 0 1 535.0,1620 L535.0,1678 A95.0,10 0 0 1 345.0,1678 Z" fill="#0D1B2E" stroke="#38BDF8" stroke-width="1.6"/>
+<ellipse cx="440" cy="1620" rx="95.0" ry="10" fill="#12233B" stroke="#38BDF8" stroke-width="1.6"/>
+<text x="440" y="1659.0" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12.5" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >ticket_messages</text>
+<path d="M605.0,1620 A95.0,10 0 0 1 795.0,1620 L795.0,1678 A95.0,10 0 0 1 605.0,1678 Z" fill="#0D1B2E" stroke="resolved_issues" stroke-width="1.6"/>
+<ellipse cx="700" cy="1620" rx="95.0" ry="10" fill="#12233B" stroke="resolved_issues" stroke-width="1.6"/>
+<text x="700" y="1659.0" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12.5" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >customer_memory</text>
+<path d="M865.0,1620 A95.0,10 0 0 1 1055.0,1620 L1055.0,1678 A95.0,10 0 0 1 865.0,1678 Z" fill="#0D1B2E" stroke="#38BDF8" stroke-width="1.6"/>
+<ellipse cx="960" cy="1620" rx="95.0" ry="10" fill="#12233B" stroke="#38BDF8" stroke-width="1.6"/>
+<text x="960" y="1659.0" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12.5" font-weight="600" fill="#E7ECF7" text-anchor="middle" opacity="1"  >uda-hub.jsonl</text>
+<path d="M660,1542 L440,1602" fill="none" stroke="#C9D3E8" stroke-width="1.6" opacity="0.95"  marker-end="url(#arrow)"/>
+<path d="M700,1546 L700,1602" fill="none" stroke="#C9D3E8" stroke-width="1.6" opacity="0.95"  marker-end="url(#arrow)"/>
+<path d="M740,1542 L960,1602" fill="none" stroke="#C9D3E8" stroke-width="1.6" opacity="0.95"  marker-end="url(#arrow)"/>
+<path d="M610,1612 C10,1650 50,310 600,285" fill="none" stroke="#A78BFA" stroke-width="1.8" opacity="0.85" stroke-dasharray="6,5" marker-end="url(#arrowViolet)"/>
+<text x="85" y="947.5" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11" font-weight="500" fill="#A78BFA" text-anchor="middle" opacity="1"  >recalled each turn</text>
+<line x1="280.0" y1="1734" x2="306.0" y2="1734" stroke="#F6AD55" stroke-width="3"/>
+<text x="316.0" y="1738" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11.5" font-weight="500" fill="#8493B0" text-anchor="start" opacity="1"  >urgent path</text>
+<line x1="420.0" y1="1734" x2="446.0" y2="1734" stroke="#4FD1C5" stroke-width="3"/>
+<text x="456.0" y="1738" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11.5" font-weight="500" fill="#8493B0" text-anchor="start" opacity="1"  >normal path</text>
+<line x1="560.0" y1="1734" x2="586.0" y2="1734" stroke="#F87171" stroke-width="3"/>
+<text x="596.0" y="1738" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11.5" font-weight="500" fill="#8493B0" text-anchor="start" opacity="1"  >escalation</text>
+<line x1="700.0" y1="1734" x2="726.0" y2="1734" stroke="#38BDF8" stroke-width="3"/>
+<text x="736.0" y="1738" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11.5" font-weight="500" fill="#8493B0" text-anchor="start" opacity="1"  >data store</text>
+<line x1="840.0" y1="1734" x2="866.0" y2="1734" stroke="#C9A8FA" stroke-width="3"/>
+<text x="876.0" y="1738" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11.5" font-weight="500" fill="#8493B0" text-anchor="start" opacity="1"  >MCP / optional</text>
+<line x1="980.0" y1="1734" x2="1006.0" y2="1734" stroke="#A78BFA" stroke-width="3"/>
+<text x="1016.0" y="1738" font-family="'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="11.5" font-weight="500" fill="#8493B0" text-anchor="start" opacity="1"  >memory feedback</text>
+</svg>
