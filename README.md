@@ -56,8 +56,8 @@ chat_interface(orchestrator, TICKET_ID)
 
 ```bash
 cd solution
-../.venv/Scripts/python.exe -m pytest test_index.py          # offline, ~4s
-../.venv/Scripts/python.exe -m pytest test_index.py --llm    # also calls the model
+../.venv/Scripts/python.exe -m pytest tests          # offline, ~4s
+../.venv/Scripts/python.exe -m pytest tests --llm    # also calls the model
 ```
 
 The default run makes no API calls. The `--llm` tier is opt-in because it is
@@ -74,9 +74,10 @@ solution/
 │   ├── config.py    paths, model clients, vector store
 │   └── workflow.py  the orchestrator graph
 ├── data/            databases and the vector index
+├── tests/           the test suite
 ├── index.py         runnable entry point
 ├── index.ipynb      the package flattened into a notebook (generated)
-└── test_index.py    tests
+└── utils.py         chat_interface and database helpers
 ```
 
 `index.ipynb` is generated from the modules by `build_index_nb.py`. Edit
